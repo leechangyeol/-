@@ -12,7 +12,7 @@ vector<int> edge[MAX];
 int edgeN[MAX];
 priority_queue<int,vector<int>,greater<int>> result;
 
-void tolo(void) {
+void topo(void) {
 
 	for (int i = 1; i <= n; i++) {
 		if (edgeN[i] == 0) {
@@ -46,6 +46,6 @@ int main(void) {
 		edge[a].push_back(b);
 		edgeN[b]++;
 	}
-	tolo();
+	topo();
 
 }
