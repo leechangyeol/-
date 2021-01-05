@@ -9,7 +9,7 @@ using namespace std;
 stack<pair<int,pair<int,int>>> pq;
 vector<int> minCost;
 vector<int> visit;
-vector<vector<pair<bool,pair<int, int>>>> material;
+vector<vector<pair<int, int>>> material;
 
 int n, m;
 
@@ -19,7 +19,7 @@ int main(void) {
 	cin >> n >> m;
 
 	minCost = vector<int>(n + 1);
-	material = vector<vector<pair<bool, pair<int, int>>>>(n + 1);
+	material = vector<vector<pair<int, int>>>(n + 1);
 	visit = vector<int>(n + 1,0);
  	for (int i = 1; i <= n; i++) {
 		cin >> minCost[i];
@@ -29,8 +29,8 @@ int main(void) {
 	for (int i = 0; i < m; i++) {
 		int a, b, c;
 		cin >> a >> b >> c;
-		material[b].push_back({ false,{ a,c } });
-		material[c].push_back({ false,{ a,b } });
+		material[b].push_back({ a,c });
+		material[c].push_back({ a,b });
 		pq.push({ a,{b,c} });
 	}
 
@@ -42,9 +42,8 @@ int main(void) {
 		pq.pop();
 		minCost[a] = min(minCost[a], minCost[b] + minCost[c]);
 		for (int i = 0; i < material[a].size();i++) {
-			if (!material[a][i].first) {
-				pq.push({ material[a][i].second.first,{a, material[a][i].second.second} });
-				material[a][i].first = true;
+			if (minCost[material[a][i].first] > minCost[a] + minCost[material[a][i].second]) {
+				pq.push({ material[a][i].first,{a, material[a][i].second} });
 			}
 		}
 	}
