@@ -18,7 +18,6 @@ int main(void) {
 		else {
 			ans = min(ans, high - low + 1);
 			sum -= map[low++];
-			if (sum >= m)ans = min(ans, high - low + 1);
 		}
 	}
 	if (ans == MAX + 1)cout << 0;
