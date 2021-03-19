@@ -1,44 +1,46 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
-typedef long long ll;
 int n, m;
 const int MAX = 1001;
-ll A[MAX],B[MAX],T;
+typedef long long ll;
+ll A[MAX], B[MAX];
+ll T;
 int main(void) {
 	cin >> T;
 	cin >> n;
-	for (int i = 0; i < n; i++) {
+	vector<ll> V, V1;
+
+	for (int i = 0; i < n; i++) 
 		cin >> A[i];
+	
+	for (int i = 0; i < n; i++) {
+		ll sum = A[i];
+		V.push_back(sum);
+		for (int j = i+1; j < n; j++) {
+			V.push_back(sum += A[j]);
+		}
 	}
 	cin >> m;
-	for (int i = 0; i < m; i++) {
+	for (int i = 0; i < m; i++) 
 		cin >> B[i];
-	}
-	int al, ar, bl, br;
-	al = ar = bl = br = 0;
-	int ans = 0;
-	ll a_sum = 0;
-	while (ar <= n) {
-		if (a_sum < T) {
-			if (ar >= n) { ar++; break; }
-			a_sum += A[ar++];
-			ll b_sum = 0;
-			br = bl = 0;
-			while (br <= m) {
-				if (a_sum + b_sum == T) {
-					ans++;
-					b_sum += B[br++];
-				}
-				else if (a_sum + b_sum < T)
-					if (br < m)
-						b_sum += B[br++];
-					else br++;
-				else b_sum -= B[bl++];
-			}
 
+	for (int i = 0; i < m; i++) {
+		ll sum = B[i];
+		V1.push_back(sum);
+		for (int j = i + 1; j < m; j++) {
+			V1.push_back(sum += B[j]);
 		}
-		else if (a_sum >= T) 
-			a_sum -= A[al++];
+	}
+
+	sort(V.begin(), V.end());
+	sort(V1.begin(), V1.end());
+	ll ans = 0;
+	for (auto temp : V) {
+		int lb = lower_bound(V1.begin(), V1.end(), T - temp) - V1.end();
+		int ub = upper_bound(V1.begin(), V1.end(), T - temp) - V1.end();
+		ans += ub - lb;
 	}
 	cout << ans;
 }
