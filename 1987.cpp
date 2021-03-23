@@ -31,7 +31,8 @@ int main(void) {
 			map[i][j] = (int)temp - 65;
 		}
 	}
-	
-	dfs(0, 0, 0);
+	visited[0][0] = 1;
+	ch[map[0][0]] = 1;
+	dfs(0, 0, 1);
 	cout << ans;
 }
