@@ -15,9 +15,8 @@ int main(void)
 	cin >> n >> k;
 
 	for (int i = 0; i < KMAX; i++)
-		dp[i] = 10001;
+		dp[i] = KMAX;
 
-	dp[0] = 0;
 	for (int i = 0; i < n; i++) {
 		cin >> narray[i];
 		dp[narray[i]] = 1;
@@ -26,7 +25,7 @@ int main(void)
 			if (dp[j] > dp[j - narray[i]] + 1)dp[j] = dp[j - narray[i]] + 1;
 	}
 	
-	if (dp[k] == 10001)
+	if (dp[k] == KMAX)
 		cout << "-1";
 	else 
 		cout << dp[k];
