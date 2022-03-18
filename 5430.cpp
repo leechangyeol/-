@@ -1,5 +1,5 @@
 #include <iostream>
-#include <vector>
+#include <deque>
 
 using namespace std;
 
@@ -17,7 +17,7 @@ int main(void)
 		int n;
 		cin >> n;
 
-		vector<int> v;
+		deque<int> v;
 
 		string number;
 		cin >> number;
@@ -28,7 +28,7 @@ int main(void)
 			int temp = 0;
 			if (48 <= (int)number[i] && (int)number[i] <= 57)
 			{
-				do 
+				do
 				{
 					temp = temp * 10 + ((int)number[i] - 48);
 				} while (48 <= (int)number[++i] && (int)number[i] <= 57);
@@ -42,7 +42,7 @@ int main(void)
 		{
 			if (com[i] == 'R')
 				Rcom = !Rcom;
-			else 
+			else
 			{
 				if (v.empty())
 				{
@@ -50,14 +50,14 @@ int main(void)
 					error = true;
 					break;
 				}
-				if (Rcom) v.erase(v.begin() + v.size() - 1);
-				else v.erase(v.begin());
-			}	
+				if (Rcom) v.pop_back();
+				else v.pop_front();
+			}
 		}
-		if (!error) 
+		if (!error)
 		{
 			cout << "[";
-			
+
 			if (v.size() > 0)
 			{
 				if (!Rcom)
@@ -70,17 +70,17 @@ int main(void)
 				}
 				else
 				{
-					cout << v[v.size()-1];
-					for (int i = v.size()-2; i >= 0; i--)
+					cout << v[v.size() - 1];
+					for (int i = v.size() - 2; i >= 0; i--)
 					{
 						cout << "," << v[i];
 					}
 				}
-				
+
 			}
 
 			cout << "]\n";
 		}
 	}
-	
+
 }
